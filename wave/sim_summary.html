@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang='zh-CN'><head><meta charset='utf-8'>
+<title>Attention IP 回归汇总</title>
+<style>body{font-family:Consolas,'Microsoft YaHei',monospace;margin:24px;}
+table{border-collapse:collapse;}td,th{border:1px solid #999;padding:6px 12px;}
+th{background:#eef;} .ok{color:#070;font-weight:bold;} .ng{color:#c00;font-weight:bold;}
+</style></head><body>
+<h2>Attention IP 回归汇总</h2>
+<p>规模 S=8, d=4，输入/输出 int8；输出比较容差 0 LSB（逐位一致）。</p>
+<table><tr><th>KV 流模式</th><th>说明</th><th>用例</th><th>通过</th><th>失败</th><th>单任务周期</th></tr>
+<tr><td>0</td><td>32 拍成对流（默认，每拍同时送 K/V 元素）</td><td>227</td><td>227</td><td>0</td><td>112</td></tr>
+<tr><td>1</td><td>64 拍交错流（偶数拍送 K，奇数拍送 V）</td><td>227</td><td>227</td><td>0</td><td>143</td></tr>
+<tr><td>2</td><td>64 拍重复对流（每拍同送两遍，K/V 同址写入）</td><td>227</td><td>227</td><td>0</td><td>143</td></tr>
+</table>
+<p>输出比较次数 2724，中间结果比较次数 14982，非逐位一致输出 0。</p>
+<p class='ok'>ALL TESTS PASSED</p>
+</body></html>
